@@ -60,7 +60,7 @@ class Builder(object):
     def __init__(self, config):
         self.config = config
         mkdir(self.config.tgt_dir)
-        self.sphinx_opts = '-j 4'
+        self.sphinx_opts = '-j 1'
         if config.build['warning_is_error'].lower() == 'true':
             self.sphinx_opts += ' -W'
         self.done = {}
@@ -145,7 +145,7 @@ class Builder(object):
             logging.info('[%d] %s', i + 1, nb[0])
         self._copy_resources(self.config.src_dir, self.config.eval_dir)
         gpus = resource.get_available_gpus()
-        num_cpu_workers = len(gpus) if gpus else 2
+        num_cpu_workers = len(gpus) if gpus else 1
         logging.info(
             f'Evaluating notebooks in parallel with {num_cpu_workers} CPU workers and {len(gpus)} GPU workers'
         )
